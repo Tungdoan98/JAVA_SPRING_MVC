@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
@@ -20,7 +19,7 @@
 		<p class="agileits2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 	</div>
 	<div class="content-agile2">
-		<form action="#" method="post">
+		<form action="register" method="post">
 			<div class="form-control w3layouts"> 
 				<input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name" required="">
 			</div>
@@ -36,7 +35,8 @@
 			<div class="form-control agileinfo">	
 				<input type="password" class="lock" name="confirm-password" placeholder="Confirm Password" id="password2" required="">
 			</div>			
-			
+			<center><h3 style="color: red">${mess1}</h3></center>
+			<center><h3 style="color:green;">${mess2}</h3></center>
 			<input type="submit" class="register" value="Register">
 		</form>
 		<script type="text/javascript">
@@ -54,7 +54,7 @@
 					//empty string means no validation error
 			}
 		</script>
-		<p class="wthree w3l">Already Registered.<a style="color: white;" href="./">Login?</a></p>
+		<p class="wthree w3l">Already Registered.<a style="color: white;" href="./login">Login?</a></p>
 		<ul class="social-agileinfo wthree2">
 			<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 			<li><a href="#"><i class="fa fa-youtube"></i></a></li>

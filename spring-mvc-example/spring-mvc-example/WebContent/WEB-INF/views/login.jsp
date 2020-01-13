@@ -25,7 +25,8 @@
 					<a href="#">Login With Facebook</a>
 				</div>
 					<h3>(or)</h3>
-					<form action="#" method="post">
+					<h3 style="color: red;"> ${mess} </h3>
+					<form action="index" method="post">
 						<input placeholder="Username or Email" name="Email" type="email" required="">
 						<input placeholder="Password" name="Password" type="password" required="">
 						<input type="submit" value="Login" name="login">
