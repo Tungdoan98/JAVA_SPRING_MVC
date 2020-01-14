@@ -131,10 +131,11 @@
 					<div class="bs-example widget-shadow" data-example-id="contextual-table">
 					<center><h2>Manager Student</h2></center> 
 						<h3><span id="button-add" class="label label-success" data-toggle="modal" data-target="#myModal">ADD</span></h3>
-						<table class="table"> 
+						<table class="table" id="table-sv"> 
 							<thead> 
 								<tr> 
 									<th>STT</th> 
+									<th style="display: none;">ID</th>
 									<th>MaSV</th>
 									<th>Name</th> 
 									<th>Age</th>
@@ -151,6 +152,7 @@
 			</div>
 		</div>
 		<%@ include file="addSV.jsp"%>
+		<%@ include file="editSV.jsp"%>
 		<!--footer-->
 		<div class="footer">
 		   <p>&copy; 2020 ĐH Giao Thong Van Tai | Manager Student</p>
@@ -207,7 +209,9 @@
 					var t=i+1;
 					data += "<tr class='active'><th scope='row'>" 
 						+ t
-						+"</th><td>"
+						+"</th><td style='display :none'>"
+						+ res[i].id
+					    + "</td><td>"
 						+ res[i].msv
 					    + "</td><td>"
 					    + res[i].name
@@ -216,7 +220,7 @@
 					    + "</td><td>"
 					    + res[i].className
 					    + "</td><td><h3><span id='button-delete' class='label label-danger'onclick=functionDelete('"+res[i].id+"')>Delete</span></h3></td>"
-						+ "<td><h3><span id='button-edit' class='label label-warning'onclick='functionEdit()'>Edit</span></h3></td></tr> "
+						+ "<td><h3><span id='button-edit' class='label label-warning' onclick=performClick('table-sv') data-toggle='modal' data-target='#myModal1'>Edit</span></h3></td></tr> "
 						$('#content').html(data);
 					}
 
@@ -249,6 +253,34 @@
 		});
 
 	}
+	function EditStudent(){
+		var id = document.getElementById("id1").value;
+		var code = document.getElementById("code1").value;
+		var name = document.getElementById("name1").value;
+		var age = document.getElementById("age1").value;
+		var className = document.getElementById("className1").value;
+		if(code !="" && name !="" && age !="" && className !=""){
+			$.ajax({
+		        url: "EditSV",
+		        type: "POST",
+		        data: {
+		          id  : id,
+		          code: code,
+		          name: name,
+		          age : age,
+		          className: className        
+		        },
+		        cache: false,
+		        success: function(dataResult){
+		          alert(dataResult);
+		          location.reload();
+		        }
+		      });
+		    }
+		    else{
+		      alert('Please fill all the field !');
+		    }
+	}
  function AddStudent() {
 		var code = document.getElementById("code").value;
 		var name = document.getElementById("name").value;
@@ -275,6 +307,35 @@
 			alert('Please fill all the field !');
 		}
 	}; 
-	</script>		
+	
+	document.getElementById("table-sv").addEventListener("click", displaytable);
+    function displaytable() {
+   	 var table = document.getElementById('table-sv');
+        
+        for(var i = 1; i < table.rows.length; i++)
+        {
+            table.rows[i].onclick = function()
+            {
+                 //rIndex = this.rowIndex;
+                 document.getElementById("id1").value = this.cells[1].innerHTML;
+                 document.getElementById("code1").value = this.cells[2].innerHTML;
+                 document.getElementById("name1").value = this.cells[3].innerHTML;
+                 document.getElementById("age1").value = this.cells[4].innerHTML;
+                 document.getElementById("className1").value = this.cells[5].innerHTML;
+            };
+        }
+   }
+
+	</script>	
+ <script type="text/javascript">
+    function performClick(elemId) {
+    var elem = document.getElementById(elemId);
+    if(elem && document.createEvent) {
+      var evt = document.createEvent("MouseEvents");
+      evt.initEvent("click", true, false);
+      elem.dispatchEvent(evt);
+   }
+  }
+</script>	
 </body>
 </html>

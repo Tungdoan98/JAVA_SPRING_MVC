@@ -122,4 +122,34 @@ public class SinhVienController {
 			return "Add student error !";
 		}
     } 
+	@RequestMapping(value="/EditSV",method=RequestMethod.POST)
+    public @ResponseBody String EditSV(@RequestParam("id") String id,@RequestParam("code") String code,
+			@RequestParam("name") String name, @RequestParam("age") int age,
+			@RequestParam("className") String className,ModelMap maps){
+		int d=0;
+		System.out.println("vao ham update");
+	    String sql = "UPDATE SINHVIEN SET NAME = '"+name+"',CLASSNAME='"+className+"',AGE ='"+age+"', MSV = '"+code+"' WHERE ID = '"+id+"'";
+	    Connection connection;
+	    try {
+	      connection = ConnectionUtils.getMyConnection();
+	      Statement statement = connection.createStatement();
+	       ResultSet rs1 = statement.executeQuery(sql);
+	       if(rs1 != null) {
+	         d=1;
+	       }
+	    
+	    } catch (ClassNotFoundException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    } catch (SQLException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    } 
+		if(d==1) {
+			return "Edit student succeed !";
+		}
+		else {
+			return "Edit student error !";
+		}
+    } 
 }
