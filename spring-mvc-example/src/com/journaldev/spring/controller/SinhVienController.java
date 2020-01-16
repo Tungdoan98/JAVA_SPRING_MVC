@@ -27,7 +27,7 @@ public class SinhVienController {
 	public ArrayList<SinhVien> Showdata(){
 		System.out.println("Vao ham");
 		ArrayList<SinhVien> listSV = new ArrayList<SinhVien>();
-		String sql = "SELECT * FROM SINHVIEN order by msv ";
+		String sql = "SELECT * FROM SINHVIEN ORDER BY MSV";
 		Connection connection;
 		try {
 			connection = ConnectionUtils.getMyConnection();
@@ -151,5 +151,28 @@ public class SinhVienController {
 		else {
 			return "Edit student error !";
 		}
+    } 
+	@RequestMapping(value="/SearchSV",method=RequestMethod.POST)
+    public @ResponseBody  ArrayList<SinhVien> SearchSV(@RequestParam("search") String search,ModelMap maps){
+		System.out.println("Vao ham");
+		ArrayList<SinhVien> listSV = new ArrayList<SinhVien>();
+		String sql = "SELECT * FROM SINHVIEN WHERE CLASSNAME='"+search+"'  ";
+		Connection connection;
+		try {
+			connection = ConnectionUtils.getMyConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				SinhVien sv = new SinhVien(rs.getString(5), rs.getString(2), rs.getString(3) , rs.getInt(4) , rs.getInt(1));
+				listSV.add(sv);
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return listSV;	
     } 
 }
